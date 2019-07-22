@@ -1,4 +1,4 @@
-# Family Tree app
+# Family Tree App
 
 ## Task:
 
@@ -17,7 +17,7 @@ server_mysql.js for connect mysql database "family"
 server.js for GraphQL
 family_tree_backup.sql is the buckup for family tree database schema
 
-### node server_mysql.js 
+### command: node server_mysql.js 
 then the server running at http://127.0.0.1:3000/
 http://127.0.0.1:3000/query could show the query result 
 
