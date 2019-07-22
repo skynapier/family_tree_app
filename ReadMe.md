@@ -21,5 +21,8 @@ family_tree_backup.sql is the buckup for family tree database schema
 then the server running at http://127.0.0.1:3000/
 http://127.0.0.1:3000/query could show the query result 
 
+### EER Diagram
+![](./family_tree_EER_diagram.jpg)
+
 ## update 22 July
 add server_mysql.js 
