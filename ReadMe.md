@@ -1,13 +1,13 @@
 # Family Tree app
 
-Task:
+## Task:
 
-Build a GraphQL Server (https://graphql.org/code/)
-Write some queries
-Write a react front-end to do queries (e.g. a Family Tree app)
-Build a database to store and retrieve information in e.g. mysql
-Connect the GraphQL API to the database
-(Handle the n+1 problem)
+* Build a GraphQL Server (https://graphql.org/code/)
+* Write some queries
+* Write a react front-end to do queries (e.g. a Family Tree app)
+* Build a database to store and retrieve information in e.g. mysql
+* Connect the GraphQL API to the database
+* (Handle the n+1 problem)
 
 
 ## How to run my program 
