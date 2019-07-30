@@ -40,3 +40,20 @@ add server_mysql.js
 * Navigation bar could show jump to homepage and show page
 * Try something about Asynchronous
 * At show page when you input something at input bar then could shown on the tree node
+
+## QA
+1. [SELECT ERROR]: ER_HOST_NOT_PRIVILEGED: Host '192.168.1.9' is not allowed to connect to this MySQL server
+* CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';
+
+* GRANT ALL PRIVILEGES ON *.* TO 'username'@'localhost' WITH GRANT OPTION;
+
+* CREATE USER 'username'@'%' IDENTIFIED BY 'password';
+
+* GRANT ALL PRIVILEGES ON *.* TO 'username'@'%' WITH GRANT OPTION;
+
+* FLUSH PRIVILEGES;
+
+2.  [SELECT ERROR]: ER_NOT_SUPPORTED_AUTH_MODE: Client does not support authentication protocol requested by server; consider upgrading MySQL client
+* alter user 'root'@'localhost' identified with mysql_native_password by '123456';
+
+* flush privileges;
