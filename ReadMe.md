@@ -41,6 +41,12 @@ add server_mysql.js
 * Try something about Asynchronous
 * At show page when you input something at input bar then could shown on the tree node
 
+## update 1 Aug
+* write some GraphQL Queries
+* add CORS
+* add Axios on React interface
+
+
 ## QA
 1. [SELECT ERROR]: ER_HOST_NOT_PRIVILEGED: Host '192.168.1.9' is not allowed to connect to this MySQL server
 * CREATE USER 'username'@'localhost' IDENTIFIED BY 'password';

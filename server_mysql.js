@@ -1,9 +1,11 @@
 var express = require('express');
 var mysql = require('mysql');
 const hostname = '127.0.0.1';
-const port = 3000;
+const port = 3001;
 
 var app = express();
+var cors = require('cors');
+app.use(cors());
 
 var connection = mysql.createConnection({
     host:'Tian-PC',
@@ -28,8 +30,8 @@ connection.query(sql, function(err,result){
     if(err){
         console.log('[SELECT ERROR]:',err.message);
     }
-    str = result[0]["name"] + '\'s father name: ' + result[0]["father name"]
-
+    // str = result[0]["name"] + '\'s father name: ' + result[0]["father name"]
+    str = result;
 
     console.log(JSON.stringify(result[0]));
 
@@ -43,5 +45,5 @@ app.get('/query', function(req, res){
 connection.end();
 
 app.listen(port, hostname, 
-    ()=> {console.log(`Server running at http://${hostname}:${port}/`);}
+    ()=> {console.log(`Server running at http://${hostname}:${port}/query`);}
 );
