@@ -1,6 +1,6 @@
 # Family Tree App
 
-## Preview of web interface:
+## Preview of web interface (currently unavaliable will be update in next week):
 https://skynapier.github.io/family_tree_app_react/
 
 ## Task:
@@ -14,22 +14,32 @@ https://skynapier.github.io/family_tree_app_react/
 
 
 ## How to run my program： 
-* my program needs node.js, express.js, mysql, React.js and express-graphql environment
+* my program needs node.js, express.js, mysql,cors, React.js and express-graphql environment
 
-* server_mysql.js for connect mysql database "family" 
-* server.js for GraphQL
+* util/util.js for connect mysql database "family" 
+* server.js for GraphQL + express server
 * family_tree_backup.sql is the buckup for family tree database schema
 
-### command: node server_mysql.js: 
-then the server running at http://127.0.0.1:3000/
-http://127.0.0.1:3000/query could show the query result 
+### command: node server.js: 
+* then the server running at http://127.0.0.1:4000/graphql
+* I currently allow graphiql to get a GUI for debugging, in further i will use /?query={"your query"}} for GET request 
 
 ### EER Diagram:
 ![](./family_tree_EER_diagram.jpg)
 
 
-### web interface github link:
+### web interface github link (currently unavailable will be update in next week):
 https://github.com/skynapier/family_tree_app_react
+
+
+## update 26 Aug
+* decoupling graphql schema into schema.js
+* decoupling mysql connection pool into util/util.js
+* merge Graphql and mysql together which means after querying then using GrahqlAPI for return values
+
+### currently looks like
+![](./currentdemo.png)
+
 
 ## update 22 July
 add server_mysql.js 
