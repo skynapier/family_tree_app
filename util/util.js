@@ -21,6 +21,8 @@ async function searchSql($sql,params) {
                     reject(err)
                 }
                 if(result.insertId) result.id = result.insertId;
+                    
+                
                  resolve(result);
             });
         });

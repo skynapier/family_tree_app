@@ -1,19 +1,12 @@
 var util = require('./util/util');
+var $sql = require('./dao/sqlMapping');
 
-const sql = {
-  test1 : "select idx.name, concat(p.f_name, ' ',p.l_name) as 'fname', p.date_of_birth \
-  from person p, \
-  (select concat(p.f_name, ' ',p.l_name) as 'name', individual_father_id as 'father_id' \
-  from person p left join relationships r on p.person_id = r.individual_id \
-  where person_id = '1') idx \
-  where p.person_id = idx.father_id",
-  
-};  
 
 const {
     GraphQLSchema,
     GraphQLObjectType,
     GraphQLString,
+    GraphQLNonNull,
     GraphQLInt,
     GraphQLBoolean
   } = require('graphql');
@@ -25,48 +18,73 @@ const person = new GraphQLObjectType({
   fields: {
     name: {
       type: GraphQLString,
-      resolve:async function (source) {
-        return source[0].name;
-    }},
-    fathername: {
-      type: GraphQLString,
-      resolve:async function (source) {
-        return source[0]['fname'];
-      }},
-    dob: {
-      type: GraphQLInt,
-      resolve:async function (source) {
-
-        var date = new Date(source[0]['date_of_birth']);
-
-        return date.getFullYear().toString();
+      resolve: function(source) {
+          return source[0];
       }
     },
-  },
 
+    fathername: {
+        type: GraphQLString,
+        resolve:async function (source) {
+          return source[1];
+        }},
+    mothername: {
+      type: GraphQLString,
+      resolve:async function (source) {
+        return source[2];
+      }},
+  },
 
 });
 
 
-
+/**
+ * for a given first name and last name find its id first 
+ * then using relastion table find his/her family_member's id 
+ * finally using family_member's id find corresponding name
+ */
 const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
-      name:'UserQuery',
-      description:'用户信息查询',
-      fields:()=>({
-          person:{
-              type:person,
-              description:'test',
+    name:'UserQuery',
+    
+    fields:()=>({
+        person:{
+            type:person,
+            
+            args: {
+              fname: {type: GraphQLString},
+              lname: {type: GraphQLString}
+            },
 
-              resolve:async function () {
-                var test = await util.searchSql(sql.test1);
-                
-                console.log("++++++", test)
-                return await test;
-              }
-          }
-      }),
-  })
+            resolve:async function (source, {fname,lname}) {
+
+              var ret = [];
+              ret.push(`${fname} ${lname}`);
+
+              var query_id = await util.searchSql($sql.findUserID,[fname,lname]);
+              var person_id = query_id[0]['person_id']
+              console.log("person id ", person_id);
+
+              var query_father_id = await util.searchSql($sql.findUserFatherID,[person_id]);
+              var person_father_id = query_father_id[0]['father_id']
+
+              var query_mother_id = await util.searchSql($sql.findUserMotherID,[person_id]);
+              var person_mother_id = query_mother_id[0]['mother_id']
+
+
+              var query_father_name = await util.searchSql($sql.findIDName,[person_father_id]);
+              var person_father_name = query_father_name[0]['name']
+              ret.push(person_father_name)
+
+              var query_mother_name = await util.searchSql($sql.findIDName,[person_mother_id]);
+              var person_mother_name = query_mother_name[0]['name']
+              ret.push(person_mother_name)
+
+              return await ret;
+            }
+        }
+    }),
+})
 });
 
 module.exports = schema;
